@@ -11,38 +11,39 @@ public class Media {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat img = Imgcodecs.imread("./img/win.jpg");
 
-        Mat result = Imgcodecs.imread("./img/color.jpg");
-
 
         int height = img.height();
         int width = img.width();
-        int fator = 21;
+
+        int fator = 3;
         int divisao = fator*fator;
 
         System.out.println(height);
         System.out.println(width);
 
+        int isPar = 0;
         int isImpar = fator % 2;
+        if(isImpar == 0){
+            isPar = 1;
+        }
 
         for(int i = 0 ; i < height; i++){
             for(int j=0; j<width ; j++){
 
                 double[] mediaTotalAutal = new double[3];
-                //System.out.println("J: "+j);
-                //System.out.println("------------Iniciando contagem------------");
 
                 int cont =0;
 
                 int inicialI = i - (fator/2);
                 int inicialJ = j - (fator/2);
-                int finalI = i + (fator/2) + isImpar;
-                int finalJ = i + (fator/2) + isImpar;
 
-                for(int ii = i - (fator/2); ii<= i + (fator/2); ii++){
-                    for(int jj = j - (fator/2); jj<= j + (fator/2); jj++){
+                int finalI = i + ((fator/2) - isPar);
+                int finalJ = i + ((fator/2) - isPar);
+
+                for(int ii = i - (fator/2); ii <= i + ((fator/2) - isPar); ii++){
+                    for(int jj = j - (fator/2); jj <= j + ((fator/2) - isPar); jj++){
 
 
-                        //System.out.println("Contagem: "+cont+  " ii = "+ii +" jj= "+jj);
                         cont ++;
                         if(ii < 0 || jj <0 || ii >= height || jj >= width){
                         }else{
@@ -55,7 +56,6 @@ public class Media {
                         }
                     }
                 }
-                //System.out.println("Pixel "+i+"x"+j+" valor= ["+mediaTotalAutal[0]+","+mediaTotalAutal[1]+","+mediaTotalAutal[2]+"]");
                 img.put(i,j,mediaTotalAutal);
             }
         }

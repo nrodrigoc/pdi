@@ -9,7 +9,7 @@ public class Main {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
 
-        Mat img = Imgcodecs.imread("./img/win.jpg");
+        Mat img = Imgcodecs.imread("./img/colo.jpg");
 
         int  x = 5/2;
 
