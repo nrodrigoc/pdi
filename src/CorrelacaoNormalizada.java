@@ -1,14 +1,18 @@
-import commons.RGB;
-import executer.Correlacao;
-import executer.FiltroTypes;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 
+/**
+ * @author Nathan Jesus
+ */
 public class CorrelacaoNormalizada {
 
     public static void main(String[] args){
+
+        double[] v1 = {4, 1, 3};
+        double[] v2 = {3, 7, 5};
+
+        System.out.println(calculaCorrelacaoNormalizada(v1, v2));
 
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat img1 = Imgcodecs.imread("./img/woman.png");
@@ -33,24 +37,26 @@ public class CorrelacaoNormalizada {
         Imgcodecs.imwrite("img/result/newGrayScale.jpg", img1);
     }
 
-
-    public double calculaCorrelacao(double[] v, double[] u) {
+    // Calcula o r resultante da correlacao normalizada
+    public static double calculaCorrelacaoNormalizada(double[] v, double[] u) {
         double mediaV = calculaMediaArray(v);
         double mediaU = calculaMediaArray(u);
 
-        // diferencaV = vetorV - mediaV
-        double[] diferencaV = calculaDiferencaVetor(v, mediaV);
-        double[] diferencaU = calculaDiferencaVetor(u, mediaU);
+        // diferencaV = vetorV - mediaV, onde mediaV eh uma constante
+        double[] diferencaV = calculaDiferencaVetorConstante(v, mediaV);
+        double[] diferencaU = calculaDiferencaVetorConstante(u, mediaU);
 
+        // Norma do vetor diverencaV
+        double normaV = calculaNormaVetor(diferencaV);
+        double normaU = calculaNormaVetor(diferencaU);
 
+        double resultado = calculaProdutoInternoVetores(diferencaV, diferencaU) / (normaV * normaU);
 
-
-
-        return 0;
+        return resultado;
     }
 
 
-    public double calculaMediaArray(double[] v) {
+    public static double calculaMediaArray(double[] v) {
         double soma = 0;
 
         for (double value : v) {
@@ -60,8 +66,19 @@ public class CorrelacaoNormalizada {
         return soma/(v.length);
     }
 
+    //Calcula o produto interno entre dois vetores
+    public static double calculaProdutoInternoVetores(double[] v, double[] u) {
+        double resultado = 0;
+
+        for(int i = 0; i < v.length; i++) {
+            resultado += v[i] * u[i];
+        }
+
+        return resultado;
+    }
+
     //Diminui as coordenadas do vetor por uma constante
-    public double[] calculaDiferencaVetor(double[] vetor, double constante) {
+    public static double[] calculaDiferencaVetorConstante(double[] vetor, double constante) {
         double[] resultado = new double[vetor.length];
 
         for (int i = 0; i < vetor.length; i++) {
@@ -72,10 +89,17 @@ public class CorrelacaoNormalizada {
     }
 
     // Calcula a normal de um vetor
-    public double calculaModuloVetor(double[] vetor)  {
+    public static double calculaNormaVetor(double[] vetor)  {
 
+        double resultado = 0;
 
-        return 0;
+        for (double v : vetor) {
+            resultado += Math.pow(v, 2);
+        }
+
+        resultado = Math.pow(resultado, 0.5);
+
+        return resultado;
     }
 
 }
