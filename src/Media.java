@@ -9,13 +9,13 @@ public class Media {
     public static void main(String[] args){
 
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Mat img = Imgcodecs.imread("./img/win.jpg");
+        Mat img = Imgcodecs.imread("./img/woman.png");
 
 
         int height = img.height();
         int width = img.width();
 
-        int fator = 3;
+        int fator = 30;
         int divisao = fator*fator;
 
         System.out.println(height);

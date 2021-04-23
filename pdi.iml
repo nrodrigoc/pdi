@@ -10,14 +10,15 @@
     <orderEntry type="module-library" exported="">
       <library name="opencv-452">
         <CLASSES>
-          <root url="jar://D:/opencv/build/java/opencv-452.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-452.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://D:/opencv/build/java/opencv-452.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-452.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="opencv-452" level="application" />
+    <orderEntry type="library" name="opencv-452" level="project" />
   </component>
 </module>
