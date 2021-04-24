@@ -15,7 +15,7 @@ public class Media {
         int height = img.height();
         int width = img.width();
 
-        int fator = 30;
+        int fator = 10;
         int divisao = fator*fator;
 
         System.out.println(height);
