@@ -21,19 +21,23 @@ public class CorrelacaoNormalizada {
         Mat mascara = Imgcodecs.imread("./img/woman_eye.png");
 
         double[][] v = {
-                {1, 3, 7, 4},
-                {5, 3, 1, 1},
-                {2, 4, 0, 8},
-                {4, 4, 4, 9}
+                {1, 3, 7, 4, 7, 8, 1},
+                {5, 3, 1, 120, 145, 150, 3},
+                {2, 4, 0, 8, 1, 2, 3},
+                {4, 4, 4, 9, 7, 5, 0},
+                {2, 2, 2, 2, 2, 2, 2},
+                {200, 200, 200, 200, 200, 200, 200}
         };
         double[][] h = {
-                {3, 1, 1},
-                {4, 0, 8}
+                {7, 4, 7, 8},
+                {1, 120, 145, 150},
+                {0, 8, 1, 2},
+                {4, 9, 7, 5}
         };
 
-        double[][] resultado = calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length);
+//        double[][] resultado = calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length);
 
-        System.out.println(Arrays.deepToString(calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length)));
+//        System.out.println(Arrays.deepToString(calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length)));
 
         // Tamanho das imagens
         int widthV = imagem.width();
@@ -52,9 +56,9 @@ public class CorrelacaoNormalizada {
         double[][] mascaraG = retornaMatrizBanda(mascara, GREEN, widthH, heightH);
         double[][] mascaraB = retornaMatrizBanda(mascara, BLUE, widthH, heightH);
 
-//        double[][] resultadoImg = calculaCorrelacaoNormBanda(imagemR, mascaraR, widthV, heightV, widthH, heightH);
+        double[][] resultadoImg = calculaCorrelacaoNormBanda(imagemR, mascaraR, widthV, heightV, widthH, heightH);
 
-//        System.out.println(Arrays.deepToString(calculaCorrelacaoNormBanda(imagemR, mascaraR, widthV, heightV, widthH, heightH)));
+        System.out.println(Arrays.deepToString(calculaCorrelacaoNormBanda(imagemR, mascaraR, widthV, heightV, widthH, heightH)));
 
 
         // Array com a média das correlações de R, G e B da imagem de entrada
@@ -149,14 +153,14 @@ public class CorrelacaoNormalizada {
 
     //Diminui as coordenadas do vetor por uma constante
     public static double[][] calculaDiferencaVetorConstante(
-            double[][] vetor, double constante, int width, int height, int inicioX, int inicioY) {
-        double[][] resultado = new double[height][width];
+            double[][] vetor, double constante, int widthH, int heightH, int inicioX, int inicioY) {
+        double[][] resultado = new double[heightH][widthH];
         int widthV = vetor[0].length;
         int heightV = vetor.length;
 
-        for (int i = 0; i < height; i++) {
+        for (int i = 0; i < heightH; i++) {
             int indiceX = i + inicioX;
-            for (int j = 0; j < width; j++) {
+            for (int j = 0; j < widthH; j++) {
                 int indiceY = j + inicioY;
                 if(indiceX < 0 || indiceX > heightV - 1 || indiceY < 0  || indiceY > widthV - 1)
                     resultado[i][j] = 0 - constante;
