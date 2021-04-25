@@ -21,15 +21,14 @@ public class CorrelacaoNormalizada {
         Mat mascara = Imgcodecs.imread("./img/woman_eye.png");
 
         double[][] v = {
-                {1, 3, 7},
-                {5, 3, 1},
-                {2, 4, 0},
-                {4, 4, 4}
+                {1, 3, 7, 4},
+                {5, 3, 1, 1},
+                {2, 4, 0, 8},
+                {4, 4, 4, 9}
         };
         double[][] h = {
-                {5, 3, 1},
-                {2, 4, 0},
-                {4, 4, 4}
+                {3, 1, 1},
+                {4, 0, 8}
         };
 
         double[][] resultado = calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length);
@@ -52,6 +51,8 @@ public class CorrelacaoNormalizada {
         double[][] mascaraR = retornaMatrizBanda(mascara, RED, widthH, heightH);
         double[][] mascaraG = retornaMatrizBanda(mascara, GREEN, widthH, heightH);
         double[][] mascaraB = retornaMatrizBanda(mascara, BLUE, widthH, heightH);
+
+//        double[][] resultadoImg = calculaCorrelacaoNormBanda(imagemR, mascaraR, widthV, heightV, widthH, heightH);
 
 //        System.out.println(Arrays.deepToString(calculaCorrelacaoNormBanda(imagemR, mascaraR, widthV, heightV, widthH, heightH)));
 
@@ -85,9 +86,9 @@ public class CorrelacaoNormalizada {
         int inicioX = x - (heightH - 1)/2;
         int inicioY = y - (widthH - 1)/2;
 
-        if (widthH % 2 == 0) // se a mascara tem largura par
+        if (heightH % 2 == 0) // se a mascara tem largura par
             inicioX = x - heightH/2;
-        if(heightH % 2 == 0) // se a mascara tem altura par
+        if(widthH % 2 == 0) // se a mascara tem altura par
             inicioY = y - widthH/2;
 
         double mediaV = calculaMediaMatriz(v, widthH, heightH, inicioX, inicioY);
