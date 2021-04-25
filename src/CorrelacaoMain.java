@@ -12,14 +12,16 @@ public class CorrelacaoMain {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat img = Imgcodecs.imread("./img/win.jpg");
 
+        FiltroTypes filtroTypes = FiltroTypes.MEDIA;
+
         Correlacao correlacao = new Correlacao();
-        Mat mat = correlacao.fazCorrelacao(20, 20, FiltroTypes.MEDIA, img);
+        Mat mat = correlacao.fazCorrelacao(25, 25, filtroTypes, img);
 
         HighGui.namedWindow("Imagem grayscale");
         HighGui.imshow("Imagem grayscale", mat);
         HighGui.waitKey(0);
 
-        Imgcodecs.imwrite("img/result/newGrayScale.jpg", img);
+        Imgcodecs.imwrite("img/result/"+filtroTypes+".jpg", img);
     }
 
 }
