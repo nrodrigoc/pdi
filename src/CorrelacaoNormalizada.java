@@ -27,8 +27,9 @@ public class CorrelacaoNormalizada {
                 {4, 4, 4}
         };
         double[][] h = {
-                {4, 0},
-                {4, 4}
+                {5, 3, 1},
+                {2, 4, 0},
+                {4, 4, 4}
         };
 
         double[][] resultado = calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length);
@@ -156,7 +157,7 @@ public class CorrelacaoNormalizada {
             int indiceX = i + inicioX;
             for (int j = 0; j < width; j++) {
                 int indiceY = j + inicioY;
-                if(indiceX < 0 || indiceX > heightV || indiceY < 0  || indiceY > widthV)
+                if(indiceX < 0 || indiceX > heightV - 1 || indiceY < 0  || indiceY > widthV - 1)
                     resultado[i][j] = 0 - constante;
                 else
                     resultado[i][j] = vetor[indiceX][indiceY] - constante;
