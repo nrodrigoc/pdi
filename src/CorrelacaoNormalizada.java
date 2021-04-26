@@ -17,8 +17,8 @@ public class CorrelacaoNormalizada {
 
     public static void main(String[] args){
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Mat imagem = Imgcodecs.imread("./img/cortado.png");
-        Mat mascara = Imgcodecs.imread("./img/cortado2.png");
+        Mat imagem = Imgcodecs.imread("./img/woman.png");
+        Mat mascara = Imgcodecs.imread("./img/woman_eye.png");
 
         double[][] v = {
                 {1, 3, 7, 4},
@@ -60,9 +60,9 @@ public class CorrelacaoNormalizada {
         // Array com a média das correlações de R, G e B da imagem de entrada
         double[] resultado = calculaMediaTresMatrizes(correlacaoR, correlacaoG, correlacaoB);
 
-        int i = 2;
 
-        Imgcodecs.imwrite("img/result/corrxnorm.jpg", imagem);
+        imprimeCorrelacao(imagem, (int) resultado[0], (int) resultado[1], widthH, heightH);
+
     }
 
     // Retorna um array com o resultado da normalizacao em todos os pontos
@@ -207,7 +207,6 @@ public class CorrelacaoNormalizada {
         int height = m2.length;
         int width = m2[0].length;
 
-
         for (int i = 0; i < height; i++) {
             for(int j = 0; j < width; j++) {
                 double media = (m1[i][j] + m2[i][j] + m3[i][j]) / 3;
@@ -221,6 +220,32 @@ public class CorrelacaoNormalizada {
         }
 
         return resultado;
+    }
+
+
+    // Imprime a marca verde na correlação
+    public static void imprimeCorrelacao(Mat imagem, int x, int y, double widthH, double heightH) {
+        // Coordenadas X e Y do pivô da máscara (de tamanho impar);
+        int inicioX = (int) (x - (heightH - 1)/2);
+        int inicioY = (int) (y - (widthH - 1)/2);
+
+        if (heightH % 2 == 0) // se a mascara tem largura par
+            inicioX = (int) (x - heightH/2);
+        if(widthH % 2 == 0) // se a mascara tem altura par
+            inicioY = (int) (y - widthH/2);
+
+        double[] green = {0, 255, 0};
+
+        for (int i = inicioY; i < inicioY + widthH; i++) {
+            imagem.put(inicioX, i, green);
+            imagem.put(inicioX + (int) heightH, i, green);
+        }
+        for (int i = inicioX; i < inicioX + heightH; i++) {
+            imagem.put(i, inicioY, green);
+            imagem.put(i, inicioY + (int) widthH, green);
+        }
+
+        Imgcodecs.imwrite("img/result/normxcorr.jpg", imagem);
     }
 
 }
