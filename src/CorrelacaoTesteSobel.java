@@ -14,16 +14,20 @@ public class CorrelacaoTesteSobel {
 
         Correlacao correlacao = new Correlacao();
 
-        double[][] mascI = new double[3][3];
-        double[][] mascII = new double[3][3];
+        double[][] mascI;
+        double[][] mascII;
 
-        mascI[0] = new double[]{-1.0, 0, 1.0};
-        mascI[1] = new double[]{-2.0, 0, 2.0};
-        mascI[2] = new double[]{-1.0, 0, 1.0};
+        //Mascara horizontal
+        mascI = new double[][]{
+                {-1.0, 0, 1.0},
+                {-2.0, 0, 2.0},
+                {-1.0, 0, 1.0}};
 
-        mascII[0] = new double[]{1.0, 2.0, 1.0};
-        mascII[1] = new double[]{0, 0, 0};
-        mascII[2] = new double[]{-1.0, -2.0, -1.0};
+        //Mascara vertical
+        mascII = new double[][]{
+                {1.0, 2.0, 1.0}
+                ,{0, 0, 0},
+                {-1.0, -2.0, -1.0}};
 
 
         Mat mat = correlacao.correlacao(img, mascI);

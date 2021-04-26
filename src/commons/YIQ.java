@@ -14,6 +14,12 @@ public class YIQ {
         this.q = q;
     }
 
+    public YIQ(double[] y) {
+        this.y = y[2];
+        this.i = y[1];
+        this.q = y[0];
+    }
+
     public RGB convertToRgb(){
         double preR;
         double preG;
@@ -25,7 +31,7 @@ public class YIQ {
 
         preG = Constants.VALUE_CONVERT_TO_RGB_GREEN_FACTOR_Y * y
                 - Constants.VALUE_CONVERT_TO_RGB_GREEN_FACTOR_I * i
-                - Constants.VALUE_CONVERT_TO_RGB_GREEN_FACTOR_Y * q;
+            - Constants.VALUE_CONVERT_TO_RGB_GREEN_FACTOR_Q * q;
 
         preB = Constants.VALUE_CONVERT_TO_RGB_BLUE_FACTOR_Y * y
                 - Constants.VALUE_CONVERT_TO_RGB_BLUE_FACTOR_I * i

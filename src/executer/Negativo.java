@@ -1,40 +1,72 @@
 package executer;
 
 import org.opencv.core.Mat;
+import utils.NegativoUtils;
 
 public class Negativo {
 
 
-    public Mat transformarEmNegativo(Mat img){
+
+    public Mat fazNegativo(Mat img, NegativoTypes negativoTypes){
+        Mat mat;
+
+        switch (negativoTypes){
+            case CORES: mat = this.transformarEmNegativoCores(img);
+                break;
+            case BRILHO: mat = this.transformarEmNegativoBrilho(img);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + negativoTypes);
+        }
+
+        return mat;
+    }
+
+
+    private Mat transformarEmNegativoBrilho(Mat img){
+
+        double [][][] matriz = NegativoUtils.transformaImgEmVetorDePixelsYIQ(img);
+
+        int h = matriz.length;
+        int w = matriz[0].length;
+
+        for(int i=0; i < h; i++){
+            for(int j= 0 ; j< w; j++){
+                double[] doubles = matriz[i][j];
+                double[] pixel = this.negativarPixelY(doubles);
+                matriz[i][j] = pixel;
+            }
+        }
+
+        Mat finalImage = NegativoUtils.transformaVetorEmMatRGB(matriz, img);
+        return finalImage;
+    }
+
+    private Mat transformarEmNegativoCores(Mat img){
 
         int h = img.height();
         int w = img.width();
 
-        Mat mat = img.clone();
-
         for(int i=0; i < h; i++){
             for(int j= 0 ; j< w; j++){
-                double[] doubles = mat.get(i, j);
-                double[] pixel = this.negativarPixel(doubles);
-                mat.put(i,j,pixel);
+                double[] doubles = img.get(i,j);
+                double[] pixel = this.negativarPixelRGB(doubles);
+                img.put(i,j,pixel);
             }
         }
-
-        return mat;
-
+        return img;
     }
 
-
-    public double[] negativarPixel(double[] pixel){
-
-        double [] newPixel = new double[3];
-
-        newPixel[0] = (255 - pixel[0]);
-        newPixel[1] = (255 - pixel[1]);
-        newPixel[2] = (255 - pixel[2]);
-
-        return  newPixel;
+    public double[] negativarPixelY(double[] pixel){
+        pixel[2] = (255 - pixel[2]);
+        return  pixel;
     }
 
+    public double[] negativarPixelRGB(double[] pixel){
+        pixel[0] = (255 - pixel[0]);
+        pixel[1] = (255 - pixel[1]);
+        pixel[2] = (255 - pixel[2]);
+        return  pixel;
+    }
 
 }

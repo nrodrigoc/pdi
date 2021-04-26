@@ -38,9 +38,9 @@ public class RGB {
     }
 
     public RGB(double [] rgb){
-        r = rgb[0];
+        r = rgb[2];
         g = rgb[1];
-        b = rgb[2];
+        b = rgb[0];
     }
 
     public double [] doGreyScaleColor(){

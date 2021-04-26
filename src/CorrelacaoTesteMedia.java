@@ -10,9 +10,7 @@ public class CorrelacaoTesteMedia {
     public static void main(String[] args){
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-
         Mat img = Imgcodecs.imread("./img/win.jpg");
-        Mat img2 = Imgcodecs.imread("./img/win2.jpg");
 
         Correlacao correlacao = new Correlacao();
 
@@ -20,13 +18,12 @@ public class CorrelacaoTesteMedia {
 
         double value = 1.0/625.0;
 
+        //Construindo uma mascara
         for(int i=0; i<25; i++){
             for(int j=0; j<25; j++){
                 masc[i][j] = value;
             }
         }
-
-
 
         Mat correlacao1 = correlacao.correlacao(img, masc);
 
