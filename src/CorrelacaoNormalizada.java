@@ -17,22 +17,19 @@ public class CorrelacaoNormalizada {
 
     public static void main(String[] args){
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Mat imagem = Imgcodecs.imread("./img/woman.png");
-        Mat mascara = Imgcodecs.imread("./img/woman_eye.png");
+        Mat imagem = Imgcodecs.imread("./img/cortado.png");
+        Mat mascara = Imgcodecs.imread("./img/cortado2.png");
 
         double[][] v = {
-                {1, 3, 7, 4, 7, 8, 1},
-                {5, 3, 1, 120, 145, 150, 3},
-                {2, 4, 0, 8, 1, 2, 3},
-                {4, 4, 4, 9, 7, 5, 0},
-                {2, 2, 2, 2, 2, 2, 2},
-                {200, 200, 200, 200, 200, 200, 200}
+                {1, 3, 7, 4},
+                {5, 3, 1, 9},
+                {0, 9, 7, 5},
+                {12, 3, 4, 1}
+
         };
         double[][] h = {
-                {7, 4, 7, 8},
-                {1, 120, 145, 150},
-                {0, 8, 1, 2},
-                {4, 9, 7, 5}
+                {1, 9},
+                {7, 5}
         };
 
 //        double[][] resultado = calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length);
@@ -56,14 +53,14 @@ public class CorrelacaoNormalizada {
         double[][] mascaraG = retornaMatrizBanda(mascara, GREEN, widthH, heightH);
         double[][] mascaraB = retornaMatrizBanda(mascara, BLUE, widthH, heightH);
 
-        double[][] resultadoImg = calculaCorrelacaoNormBanda(imagemR, mascaraR, widthV, heightV, widthH, heightH);
-
-        System.out.println(Arrays.deepToString(calculaCorrelacaoNormBanda(imagemR, mascaraR, widthV, heightV, widthH, heightH)));
-
+        double[][] correlacaoR = calculaCorrelacaoNormBanda(imagemR, mascaraR, widthV, heightV, widthH, heightH);
+        double[][] correlacaoG = calculaCorrelacaoNormBanda(imagemG, mascaraG, widthV, heightV, widthH, heightH);
+        double[][] correlacaoB = calculaCorrelacaoNormBanda(imagemB, mascaraB, widthV, heightV, widthH, heightH);
 
         // Array com a média das correlações de R, G e B da imagem de entrada
-        int[][] s = new int[widthV][heightV];
+        double[] resultado = calculaMediaTresMatrizes(correlacaoR, correlacaoG, correlacaoB);
 
+        int i = 2;
 
         Imgcodecs.imwrite("img/result/corrxnorm.jpg", imagem);
     }
@@ -170,7 +167,6 @@ public class CorrelacaoNormalizada {
             }
         }
 
-
         return resultado;
     }
 
@@ -197,6 +193,30 @@ public class CorrelacaoNormalizada {
         for(int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 resultado[i][j] = img.get(i, j)[bandIndex];
+            }
+        }
+
+        return resultado;
+    }
+
+    // Calcula a média entre 3 pontos da mesma coordenada em 3 matrizes te largura width e altura height
+    public static double[] calculaMediaTresMatrizes(double[][] m1, double[][] m2, double[][] m3) {
+        //Armazena as coordenadas x e y do valor mais próximo de 1 e o seu valor ao fim da média;
+        double[] resultado = new double[3];
+        double maior = -20;
+        int height = m2.length;
+        int width = m2[0].length;
+
+
+        for (int i = 0; i < height; i++) {
+            for(int j = 0; j < width; j++) {
+                double media = (m1[i][j] + m2[i][j] + m3[i][j]) / 3;
+                 if(maior < media) {
+                     resultado[0] = i;
+                     resultado[1] = j;
+                     resultado[2] = media;
+                     maior = media;
+                 }
             }
         }
 
