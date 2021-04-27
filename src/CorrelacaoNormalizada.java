@@ -32,7 +32,7 @@ public class CorrelacaoNormalizada {
                 {7, 5}
         };
 
-//        double[][] resultado = calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length);
+//        double[][] resultado1 = calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length);
 
 //        System.out.println(Arrays.deepToString(calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length)));
 
@@ -58,8 +58,7 @@ public class CorrelacaoNormalizada {
         double[][] correlacaoB = calculaCorrelacaoNormBanda(imagemB, mascaraB, widthV, heightV, widthH, heightH);
 
         // Array com a média das correlações de R, G e B da imagem de entrada
-        double[] resultado = calculaMediaTresMatrizes(correlacaoR, correlacaoG, correlacaoB);
-
+        double[] resultado = retornaCoordenadasEMaiorValor(correlacaoR, correlacaoG, correlacaoB);
 
         imprimeCorrelacao(imagem, (int) resultado[0], (int) resultado[1], widthH, heightH);
 
@@ -73,7 +72,7 @@ public class CorrelacaoNormalizada {
 
         for(int i = 0; i < heightV; i++) {
             for (int j = 0; j < widthV; j++) {
-                resultado[i][j] = calculaCorrelacaoNormPixel(bandaImagem, bandaMascara, widthH, heightH, i, j);
+                resultado[i][j] = calculaCorrelacaoPixelAPixel(bandaImagem, bandaMascara, widthH, heightH, i, j);
             }
         }
 
@@ -81,7 +80,7 @@ public class CorrelacaoNormalizada {
     }
 
     // Calcula o r resultante da correlacao normalizada para um ponto
-    public static double calculaCorrelacaoNormPixel(
+    public static double calculaCorrelacaoPixelAPixel(
             double[][] v, double[][] h, int widthH, int heightH, int x, int y) {
         // Coordenadas X e Y do pivô da máscara (de tamanho impar);
         int inicioX = x - (heightH - 1)/2;
@@ -200,7 +199,7 @@ public class CorrelacaoNormalizada {
     }
 
     // Calcula a média entre 3 pontos da mesma coordenada em 3 matrizes te largura width e altura height
-    public static double[] calculaMediaTresMatrizes(double[][] m1, double[][] m2, double[][] m3) {
+    public static double[] retornaCoordenadasEMaiorValor(double[][] m1, double[][] m2, double[][] m3) {
         //Armazena as coordenadas x e y do valor mais próximo de 1 e o seu valor ao fim da média;
         double[] resultado = new double[3];
         double maior = -20;
