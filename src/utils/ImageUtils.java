@@ -4,7 +4,7 @@ import commons.RGB;
 import commons.YIQ;
 import org.opencv.core.Mat;
 
-public class NegativoUtils {
+public class ImageUtils {
 
     public static double [][][] transformaImgEmVetorDePixelsYIQ(Mat img){
 

@@ -41,6 +41,15 @@ public class YIQ {
         return rgb;
     }
 
+    public double[] getInArray(){
+        double[] yiq = new double[3];
+        yiq[0] = this.q;
+        yiq[1] = this.i;
+        yiq[2] = this.y;
+
+        return yiq;
+    }
+
 
     public double getY() {
         return y;

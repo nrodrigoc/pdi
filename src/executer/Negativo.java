@@ -1,7 +1,7 @@
 package executer;
 
 import org.opencv.core.Mat;
-import utils.NegativoUtils;
+import utils.ImageUtils;
 
 public class Negativo {
 
@@ -25,7 +25,7 @@ public class Negativo {
 
     private Mat transformarEmNegativoBrilho(Mat img){
 
-        double [][][] matriz = NegativoUtils.transformaImgEmVetorDePixelsYIQ(img);
+        double [][][] matriz = ImageUtils.transformaImgEmVetorDePixelsYIQ(img);
 
         int h = matriz.length;
         int w = matriz[0].length;
@@ -38,7 +38,7 @@ public class Negativo {
             }
         }
 
-        Mat finalImage = NegativoUtils.transformaVetorEmMatRGB(matriz, img);
+        Mat finalImage = ImageUtils.transformaVetorEmMatRGB(matriz, img);
         return finalImage;
     }
 
