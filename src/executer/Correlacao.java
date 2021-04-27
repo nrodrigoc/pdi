@@ -1,5 +1,6 @@
 package executer;
 
+import executer.constants.CorrelacaoConstants;
 import order.QuickSort;
 import org.opencv.core.Mat;
 
@@ -113,8 +114,53 @@ public class Correlacao {
             }
         }
         return finalMat;
-
     }
+
+    public Mat correlacao(Mat img, double[][] masc){
+
+
+        int height = img.height();
+        int width = img.width();
+
+        int fatorM = masc.length;
+        int fatorN = masc[0].length;
+
+        int isImpar = (fatorM*fatorN) % 2;
+        int isPar = isImpar == 0? 1 : 0;
+
+        Mat finalMat = img.clone();
+
+        for(int i = 0 ; i < height; i++){
+            for(int j = 0; j< width ; j++){
+
+                double[] pixelFinal = new double[3];
+                int contII=0;
+
+                for(int ii = i - (fatorM/2); ii <= i + ((fatorM/2) - isPar); ii++){
+                    int contJJ=0;
+                    for(int jj = j - (fatorN/2); jj <= j + ((fatorN/2) - isPar); jj++){
+
+                        if(ii < 0 || ii >= height || jj < 0 || jj >= width ){
+
+                        }else {
+                            double[] pixelPreSoma = img.get(ii, jj);
+
+                            pixelFinal[0] += masc[contII][contJJ] * pixelPreSoma[0];
+                            pixelFinal[1] += masc[contII][contJJ] * pixelPreSoma[1];
+                            pixelFinal[2] += masc[contII][contJJ] * pixelPreSoma[2];
+
+                        }
+                        contJJ++;
+                    }
+                    contII++;
+                }
+                finalMat.put(i,j,pixelFinal);
+            }
+        }
+        return finalMat;
+    }
+
+
 
 
 }

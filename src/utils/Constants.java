@@ -3,8 +3,8 @@ package utils;
 public class Constants {
 
     // YIQ -> RGB FATORES:
-    public static final double VALUE_CONVERT_TO_RGB_RED_FACTOR_Y = 0.956;
-    public static final double VALUE_CONVERT_TO_RGB_RED_FACTOR_I = 1;
+    public static final double VALUE_CONVERT_TO_RGB_RED_FACTOR_Y = 1;
+    public static final double VALUE_CONVERT_TO_RGB_RED_FACTOR_I = 0.956;
     public static final double VALUE_CONVERT_TO_RGB_RED_FACTOR_Q = 0.621;
 
     public static final double VALUE_CONVERT_TO_RGB_GREEN_FACTOR_Y = 1;

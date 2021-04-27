@@ -64,7 +64,7 @@ public class Media {
         HighGui.imshow("Imagem grayscale", img);
         HighGui.waitKey(0);
 
-        Imgcodecs.imwrite("img/result/newGrayScale.jpg", img);
+        Imgcodecs.imwrite("img/result/imageMedia.jpg", img);
 
     }
 
