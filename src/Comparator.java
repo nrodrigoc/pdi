@@ -12,12 +12,12 @@ public class Comparator {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat img = Imgcodecs.imread("./img/win.jpg");
 
-        long startTime =System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         Correlacao correlacao = new Correlacao();
         Mat mat = correlacao.fazCorrelacao(25, 25, FiltroTypes.MEDIA, img);
-        long endTime =System.currentTimeMillis();
+        long endTime = System.currentTimeMillis();
 
-        long startTime1 =System.currentTimeMillis();
+        long startTime1 = System.currentTimeMillis();
         Mat mat1 = correlacao.fazCorrelacao(25, 1, FiltroTypes.MEDIA, img);
         mat1 = correlacao.fazCorrelacao(1, 25, FiltroTypes.MEDIA, mat1);
         long endTime1 =System.currentTimeMillis();

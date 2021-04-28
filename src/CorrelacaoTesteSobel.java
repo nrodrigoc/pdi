@@ -1,4 +1,6 @@
 import executer.Correlacao;
+import executer.FiltroTypes;
+import executer.constants.CorrelacaoConstants;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.highgui.HighGui;

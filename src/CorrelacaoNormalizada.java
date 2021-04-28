@@ -1,3 +1,4 @@
+import executer.constants.CorrelacaoConstants;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -9,49 +10,26 @@ import java.util.Arrays;
  */
 public class CorrelacaoNormalizada {
 
-    // Indice de cada banda no pixel
-    public static final int RED = 2;
-    public static final int GREEN = 1;
-    public static final int BLUE = 0;
-
-
     public static void main(String[] args){
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat imagem = Imgcodecs.imread("./img/woman.png");
         Mat mascara = Imgcodecs.imread("./img/woman_eye.png");
 
-        double[][] v = {
-                {1, 3, 7, 4},
-                {5, 3, 1, 9},
-                {0, 9, 7, 5},
-                {12, 3, 4, 1}
-
-        };
-        double[][] h = {
-                {1, 9},
-                {7, 5}
-        };
-
-//        double[][] resultado1 = calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length);
-
-//        System.out.println(Arrays.deepToString(calculaCorrelacaoNormBanda(v, h, v[0].length, v.length, h[0].length, h.length)));
-
         // Tamanho das imagens
         int widthV = imagem.width();
         int heightV = imagem.height();
-
         int widthH = mascara.width();
         int heightH = mascara.height();
 
         // Arrays R, G e B da imagem
-        double[][] imagemR = retornaMatrizBanda(imagem, RED, widthV, heightV);
-        double[][] imagemG = retornaMatrizBanda(imagem, GREEN, widthV, heightV);
-        double[][] imagemB = retornaMatrizBanda(imagem, BLUE, widthV, heightV);
+        double[][] imagemR = retornaMatrizBanda(imagem, CorrelacaoConstants.RED, widthV, heightV);
+        double[][] imagemG = retornaMatrizBanda(imagem, CorrelacaoConstants.GREEN, widthV, heightV);
+        double[][] imagemB = retornaMatrizBanda(imagem, CorrelacaoConstants.BLUE, widthV, heightV);
 
         // Arrays R, G e B da máscara
-        double[][] mascaraR = retornaMatrizBanda(mascara, RED, widthH, heightH);
-        double[][] mascaraG = retornaMatrizBanda(mascara, GREEN, widthH, heightH);
-        double[][] mascaraB = retornaMatrizBanda(mascara, BLUE, widthH, heightH);
+        double[][] mascaraR = retornaMatrizBanda(mascara, CorrelacaoConstants.RED, widthH, heightH);
+        double[][] mascaraG = retornaMatrizBanda(mascara, CorrelacaoConstants.GREEN, widthH, heightH);
+        double[][] mascaraB = retornaMatrizBanda(mascara, CorrelacaoConstants.BLUE, widthH, heightH);
 
         double[][] correlacaoR = calculaCorrelacaoNormBanda(imagemR, mascaraR, widthV, heightV, widthH, heightH);
         double[][] correlacaoG = calculaCorrelacaoNormBanda(imagemG, mascaraG, widthV, heightV, widthH, heightH);
@@ -60,7 +38,7 @@ public class CorrelacaoNormalizada {
         // Array com a média das correlações de R, G e B da imagem de entrada
         double[] resultado = retornaCoordenadasEMaiorValor(correlacaoR, correlacaoG, correlacaoB);
 
-        imprimeCorrelacao(imagem, (int) resultado[0], (int) resultado[1], widthH, heightH);
+        imprimeCorrelacao(imagem, (int) resultado[0], (int) resultado[1], widthH, heightH, "normxcorr");
 
     }
 
@@ -198,6 +176,7 @@ public class CorrelacaoNormalizada {
         return resultado;
     }
 
+
     // Calcula a média entre 3 pontos da mesma coordenada em 3 matrizes te largura width e altura height
     public static double[] retornaCoordenadasEMaiorValor(double[][] m1, double[][] m2, double[][] m3) {
         //Armazena as coordenadas x e y do valor mais próximo de 1 e o seu valor ao fim da média;
@@ -223,7 +202,7 @@ public class CorrelacaoNormalizada {
 
 
     // Imprime a marca verde na correlação
-    public static void imprimeCorrelacao(Mat imagem, int x, int y, double widthH, double heightH) {
+    public static void imprimeCorrelacao(Mat imagem, int x, int y, double widthH, double heightH, String nome) {
         // Coordenadas X e Y do pivô da máscara (de tamanho impar);
         int inicioX = (int) (x - (heightH - 1)/2);
         int inicioY = (int) (y - (widthH - 1)/2);
@@ -244,7 +223,7 @@ public class CorrelacaoNormalizada {
             imagem.put(i, inicioY + (int) widthH, green);
         }
 
-        Imgcodecs.imwrite("img/result/normxcorr.jpg", imagem);
+        Imgcodecs.imwrite("img/result/" + nome + ".jpg", imagem);
     }
 
 }

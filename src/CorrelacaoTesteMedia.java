@@ -1,5 +1,7 @@
 import commons.RGB;
 import executer.Correlacao;
+import executer.FiltroTypes;
+import executer.constants.CorrelacaoConstants;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.highgui.HighGui;
@@ -14,13 +16,16 @@ public class CorrelacaoTesteMedia {
 
         Correlacao correlacao = new Correlacao();
 
-        double[][] masc = new double[25][25];
+        int height = 31;
+        int width = 31;
 
-        double value = 1.0/625.0;
+        double[][] masc = new double[height][width];
+
+        double value = 1.0/(height*width);
 
         //Construindo uma mascara
-        for(int i=0; i<25; i++){
-            for(int j=0; j<25; j++){
+        for(int i=0; i<height; i++){
+            for(int j=0; j<width; j++){
                 masc[i][j] = value;
             }
         }

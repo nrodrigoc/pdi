@@ -15,7 +15,7 @@ public class NegativoMain {
 
         executer.Negativo negativo = new executer.Negativo();
 
-        NegativoTypes negativoTypes = NegativoTypes.BRILHO;
+        NegativoTypes negativoTypes = NegativoTypes.CORES;
 
         Mat mat = negativo.fazNegativo(img, negativoTypes );
 

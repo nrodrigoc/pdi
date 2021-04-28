@@ -20,8 +20,6 @@ public class BitsPixel {
 
         Mat mat = bitsPixelComponente.mudarNumeroDeValores(img, bitPixelComponentTypes);
 
-
-
         HighGui.namedWindow("Imagem com valores de pixel mudados:");
         HighGui.imshow("Imagem com valores de pixel mudados:", mat);
         HighGui.waitKey(0);
